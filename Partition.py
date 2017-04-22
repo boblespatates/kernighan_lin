@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-
+import math
 
 #Appelle de Ker_Lin pour former deux partitions
 def Kernighan_Lin(Matrice_graphe):
@@ -12,13 +12,19 @@ def Kernighan_Lin(Matrice_graphe):
 	
 	visiter = []
 	non_Visiter = range(len(Matrice_graphe))
-	sommet_a,sommet_b,gain = Calc_Gain(Matrice_Graphe,vecteur_diff)
-	visiter.append(sommet_a)
-	visiter.append(sommet_b)
-	non_Visiter.remove(sommet_a)
-	non_Visiter.remove(sommet_b)
+	list_Gain = []
 
-	
+	#On effectue n/2 permutations	
+	for i in range(int(math.floor(len(Matrice_Graphe)/2))):
+		sommet_a,sommet_b,gain = Calc_Gain(Matrice_Graphe,vecteur_diff,visiter,part_A,part_B)	
+		
+		visiter.append(sommet_a)
+		visiter.append(sommet_b)
+		non_Visiter.remove(sommet_a)
+		non_Visiter.remove(sommet_b)
+		list_Gain.append(gain)
+		
+		vecteur_diff = Calc_DI_refresh(Matrice_Graphe,sommet_a,sommet_b,part_A,part_B,visiter,vecteur_diff)
 
 #Initialise les partitions
 def Init_Partition(Matrice_Graphe):
@@ -57,13 +63,15 @@ def Calcule_DI(Matrice_Graphe,part_A,part_B,paire):
 
 
 #Calucle du gain et retourne les sommets correspondant
-def Calc_Gain(Matrice_Graphe,vecteur_diff):
+def Calc_Gain(Matrice_Graphe,vecteur_diff,visiter,part_A,part_B):
 	
-	Taille = len(Matrice_Graphe)
-	gain = vecteur_diff[0] + vecteur_diff[1] - 2*Matrice_Graphe[0][1]
+	#Attention façon très peu propre de faire la chose	
+	gain = -100000000
 
-	for i in range(Taille):
-		for j in range(i+1,Taille):
+	temps_A,temps_B = Part_Not_Visiter(part_A,part_B,visiter)
+
+	for i in temps_A:
+		for j in temps_B:
 			temps = vecteur_diff[i] + vecteur_diff[j] - 2*Matrice_Graphe[i][j]
 			if (max([gain,temps]) == temps):
 				gain = temps
@@ -71,6 +79,17 @@ def Calc_Gain(Matrice_Graphe,vecteur_diff):
 				sommet_b = j
 	return (sommet_a,sommet_b,gain)
 
+def Part_Not_Visiter(part_A,part_B,visiter):
+	
+	new_A = list(part_A)
+	new_B = list(part_B)
+
+	for i in visiter:
+		if new_A.count(i) == 1:
+			new_A.remove(i)
+		if new_B.count(i) == 1:
+			new_B.remove(i)
+	return (new_A,new_B)
 
 #Permet de rafraichir les Di
 def Calc_DI_refresh(Matrice_Graphe,sommet_a,sommet_b,part_A,part_B,visiter,vecteur_diff):
@@ -84,7 +103,7 @@ def Calc_DI_refresh(Matrice_Graphe,sommet_a,sommet_b,part_A,part_B,visiter,vecte
 			else:
 				
 				vecteur_diff[i] = vecteur_diff[i] + 2*Matrice_Graphe[sommet_b][i] - 2*Matrice_Graphe[sommet_a][i]
-
+	
 	return vecteur_diff
 
 

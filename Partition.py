@@ -38,6 +38,8 @@ def Kernighan_Lin(Matrice_graphe):
 	print(part_A)
 	print('Partition deux:')
 	print(part_B)
+
+
 #Initialise les partitions
 def Init_Partition(Matrice_Graphe):
 	

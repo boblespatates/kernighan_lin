@@ -29,8 +29,8 @@ def Kernighan_Lin(MatriceGraphe):
 			vecteur_diff = Calc_DI_refresh(MatriceGraphe,sommet_a,sommet_b,part_A,part_B,visiter,vecteur_diff)
 		
 			Gain_Max,nb_Permutation = Calc_Sum_Gain_Max(list_Gain)
-		
-		if Gain_Max > 0:
+		print(Gain_Max)
+		if Gain_Max > 10**(-10):
 			part_A,part_B = Permuter(part_A,part_B,nb_Permutation,list_Permutation)
 		else:
 			break
@@ -39,9 +39,10 @@ def Kernighan_Lin(MatriceGraphe):
 	#print('Partition deux:')
 	#print(part_B)
 	return(part_A, part_B)
-
+	
 #Initialise les partitions
 def Init_Partition(MatriceGraphe):
+
 	Taille = len(MatriceGraphe)
 	sommet = list(range(Taille))
 
@@ -146,7 +147,7 @@ def Calc_Sum_Gain_Max(list_Gain):
 
 #Effectue toutes les permutations pour obtenir les deux sous graphes
 def Permuter(part_A,part_B,nb_Permutation,list_Permutation):
-
+	
 	for i in range(nb_Permutation):
 		part_A.append(list_Permutation[i][1])
 		part_A.remove(list_Permutation[i][0])

@@ -1,6 +1,10 @@
-import os
+# -*- coding: utf-8 -*-
+
 import csv
 import math as m
+import numpy as np
+import matplotlib.pyplot as plt
+#from partition import *
 
 #import des données        
 file=open("C:\\users\et\Documents\python\kernighanLin\kernighan_lin\quakes.csv","r")
@@ -20,11 +24,11 @@ for row in test:
     stations.append(float(row[5]))
 
 #création de la matrice d'adjacence
-N = 200 #nombre de valeurs à utiliser
+N = 10 #nombre de valeurs à utiliser
 matrice = np.zeros((N,N))
 for i in range(N):
     for j in range(N):
-        matrice[i][j] = m.sqrt( (lat[i]-lat[j])*(lat[i]-lat[j]) * (long[i]-long[j])*(long[i]-long[j]) )
+        matrice[i][j] = m.sqrt( (lat[i]-lat[j])*(lat[i]-lat[j]) + (long[i]-long[j])*(long[i]-long[j]) )
 
 #calcul du résultat
 partition = Kernighan_Lin(matrice)
@@ -49,5 +53,8 @@ long2=[]
 for i in groupe2:
     long2.append(long[i])
     
-plt.plot(long1, lat1,"r.")
-plt.plot(long2,lat2, "b.")
+#plt.plot(long1, lat1,"r.")
+#plt.plot(long2,lat2, "b.")
+plt.plot(long[:100], lat[:100], "r.")
+plt.plot(long[100:200], lat[100:200], "b.")
+

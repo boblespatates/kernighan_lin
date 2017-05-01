@@ -24,11 +24,11 @@ for row in test:
     stations.append(float(row[5]))
 
 #création de la matrice d'adjacence
-N = 10 #nombre de valeurs à utiliser
+N = 200 #nombre de valeurs à utiliser
 matrice = np.zeros((N,N))
 for i in range(N):
     for j in range(N):
-        matrice[i][j] = m.sqrt( (lat[i]-lat[j])*(lat[i]-lat[j]) + (long[i]-long[j])*(long[i]-long[j]) )
+        matrice[i][j] = - m.sqrt( (lat[i]-lat[j])*(lat[i]-lat[j]) + (long[i]-long[j])*(long[i]-long[j]) )
 
 #calcul du résultat
 partition = Kernighan_Lin(matrice)

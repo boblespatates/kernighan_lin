@@ -29,7 +29,7 @@ def Kernighan_Lin(MatriceGraphe):
 			vecteur_diff = Calc_DI_refresh(MatriceGraphe,sommet_a,sommet_b,part_A,part_B,visiter,vecteur_diff)
 		
 			Gain_Max,nb_Permutation = Calc_Sum_Gain_Max(list_Gain)
-		print(Gain_Max)
+		print(Gain_Max, gain)
 		if Gain_Max > 10**(-10):
 			part_A,part_B = Permuter(part_A,part_B,nb_Permutation,list_Permutation)
 		else:

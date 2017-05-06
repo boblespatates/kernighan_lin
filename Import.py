@@ -53,8 +53,9 @@ long2=[]
 for i in groupe2:
     long2.append(long[i])
     
-#plt.plot(long1, lat1,"r.")
-#plt.plot(long2,lat2, "b.")
-plt.plot(long[:100], lat[:100], "r.")
-plt.plot(long[100:200], lat[100:200], "b.")
+plt.plot(long1, lat1,"r.")
+plt.plot(long2,lat2, "b.")
+plt.show()
+#plt.plot(long[:100], lat[:100], "r.")
+#plt.plot(long[100:200], lat[100:200], "b.")
 

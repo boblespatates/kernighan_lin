@@ -4,8 +4,10 @@ import numpy as np
 import math as m
 
 #Appel de Ker_Lin pour former deux partitions
-def Kernighan_Lin(MatriceGraphe):
-
+def Kernighan_Lin(MatriceGrapheInit, ecart):
+	n = len(MatriceGrapheInit)
+	MatriceGraphe = np.zeros((n + ecart, n+ecart));
+	MatriceGraphe[:n,:n] = MatriceGrapheInit
 	#Initialisation des données	
 	part_A,part_B = Init_Partition(MatriceGraphe)
 
@@ -38,6 +40,20 @@ def Kernighan_Lin(MatriceGraphe):
 	#print(part_A)
 	#print('Partition deux:')
 	#print(part_B)
+	i=0
+	while i < len(part_A):
+		if part_A[i] >= n:
+			part_A.pop(i)
+		else:
+			i = i+1
+			
+	i=0
+	while i < len(part_B):
+		if part_B[i] >= n:
+			part_B.pop(i)
+		else:
+			i = i+1
+			
 	return(part_A, part_B)
 	
 #Initialise les partitions
@@ -157,6 +173,6 @@ def Permuter(part_A,part_B,nb_Permutation,list_Permutation):
 	return (part_A,part_B)
 	
 	
-Matrice_Graphes = [[0,1,0,0,1,1,0,0],[1,0,0,0,1,1,0,0],[0,0,0,1,0,1,1,1],[0,0,1,0,0,0,1,1],[1,1,0,0,0,1,0,0],[1,1,1,0,1,0,0,0],[0,0,1,1,0,0,0,1],[0,0,1,1,0,0,1,0]]
-A = Kernighan_Lin(Matrice_Graphes)
+Matrice_Graphes = np.array([[0,1,0,0,1,1,0,0],[1,0,0,0,1,1,0,0],[0,0,0,1,0,1,1,1],[0,0,1,0,0,0,1,1],[1,1,0,0,0,1,0,0],[1,1,1,0,1,0,0,0],[0,0,1,1,0,0,0,1],[0,0,1,1,0,0,1,0]])
+A = Kernighan_Lin(Matrice_Graphes,2)
 print(A)
